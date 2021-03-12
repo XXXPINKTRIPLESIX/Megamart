@@ -10,6 +10,6 @@
     <string name="menu_home">Главная</string>
     <string name="menu_cart">Корзина</string>
     <string name="menu_catalog">Каталог</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="search_hint">Поиск</string>
 </resources>
