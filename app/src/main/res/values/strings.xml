@@ -12,4 +12,5 @@
     <string name="menu_catalog">Каталог</string>
 
     <string name="search_hint">Поиск</string>
+    <string name="no_image">no_image</string>
 </resources>
