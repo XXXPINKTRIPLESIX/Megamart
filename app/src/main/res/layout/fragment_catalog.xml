@@ -5,10 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.catalog.CatalogFragment">
 
-    <TextView
-        android:id="@+id/text_catalog"
-        android:layout_width="match_parent"
+    <ExpandableListView
+        android:id="@+id/elvCategories"
         android:layout_height="match_parent"
-        android:text="Hello" />
-
+        android:layout_width="match_parent"
+        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0.5dp" />
 </FrameLayout>
