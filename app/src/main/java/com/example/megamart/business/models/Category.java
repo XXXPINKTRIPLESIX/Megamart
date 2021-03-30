@@ -27,7 +27,7 @@ public class Category {
     public String display;
     @SerializedName("image")
     @Expose
-    public Object image;
+    public Image image;
     @SerializedName("menu_order")
     @Expose
     public Integer menuOrder;

@@ -6,5 +6,6 @@
     <color name="colorBlack">#000000</color>
     <color name="colorSecondaryOrange">#F4A51C</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBackground">#EAEFF2</color>
 <!--    <color name="colorSecondaryDarkBlue">#005a87</color>-->
 </resources>

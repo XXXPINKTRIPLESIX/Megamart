@@ -4,11 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +18,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
+public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecyclerAdapter.ViewHolder> {
 
     public interface OnItemClickListener {
         void onItemClick(Product task, int pos);
@@ -31,7 +29,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     private int layout;
     private OnItemClickListener itemClickListener;
 
-    public ProductsAdapter(@NonNull Context context, int resource, @NonNull List<Product> products) {
+    public ProductsRecyclerAdapter(@NonNull Context context, int resource, @NonNull List<Product> products) {
         this.products = products;
         this.layout = resource;
         this.inflater = LayoutInflater.from(context);
@@ -57,7 +55,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
             Picasso.get().load(product.images.get(0).src).into(holder.productImage);
         }
         catch (Exception e){
-            //throw new UnsupportedOperationException("Not implemented yet");
+            holder.productImage.setImageResource(com.example.megamart.R.drawable.no_image_available);
         }
 //        holder.clRoot.setOnClickListener(new View.OnClickListener() {
 //            @Override
