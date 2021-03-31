@@ -61,16 +61,16 @@ public class HomeFragment extends Fragment implements CategoryHomeRecyclerAdapte
         rvHomeCategories.setAdapter(categoryAdapter);
 
         viewModel.getCatalogList(100, 1, 0, AppConstants.EXCLUDES_ID).observe(getViewLifecycleOwner(), categoryResponse -> {
-            if(categoryList.size() == 0) {
-                List<Category> mItems = categoryResponse;
-                categoryList.addAll(mItems);
-            }
+            categoryList.clear();
+            //List<Category> mItems = categoryResponse;
+            categoryList.addAll(categoryResponse);
             categoryAdapter.notifyDataSetChanged();
         });
 
         viewModel.getProductList(50, 1).observe(getViewLifecycleOwner(), productResponse -> {
-            List<Product> mItems = productResponse;
-            productsList.addAll(mItems);
+            productsList.clear();
+            //List<Product> mItems = productResponse;
+            productsList.addAll(productResponse);
             productAdapter.notifyDataSetChanged();
         });
 
@@ -90,6 +90,6 @@ public class HomeFragment extends Fragment implements CategoryHomeRecyclerAdapte
         Product product = productsList.get(pos);
         Bundle bundle = new Bundle();
         bundle.putSerializable("Product", product);
-        NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_productDetailFragment , bundle);
+        NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_productDetailFragment, bundle);
     }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,13 +48,13 @@ public class CatalogFragment extends Fragment implements CategoryRecyclerAdapter
         rvCatalog.addItemDecoration(horizontal);
         rvCatalog.addItemDecoration(vertical);
 
+        categoryRecyclerAdapter = new CategoryRecyclerAdapter(getContext(), R.layout.category_list_item, categoryList, this);
+        rvCatalog.setAdapter(categoryRecyclerAdapter);
+
         viewModel.getCatalogList(100, 1, 0, AppConstants.EXCLUDES_ID).observe(getViewLifecycleOwner(), categoriesResponse -> {
-            if (categoryList.size() == 0) {
-                List<Category> mItems = categoriesResponse;
-                categoryList.addAll(mItems);
-            }
-            categoryRecyclerAdapter = new CategoryRecyclerAdapter(getContext(), R.layout.category_list_item, categoryList, this);
-            rvCatalog.setAdapter(categoryRecyclerAdapter);
+            categoryList.clear();
+            //List<Category> mItems = categoriesResponse;
+            categoryList.addAll(categoriesResponse);
         });
 
         return root;

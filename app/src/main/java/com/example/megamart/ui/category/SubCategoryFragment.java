@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.solver.PriorityGoalRow;
@@ -53,7 +54,13 @@ public class SubCategoryFragment extends Fragment implements ProductsRecyclerAda
                 ViewModelProviders.of(this).get(SubCategoryViewModel.class);
         View root = inflater.inflate(R.layout.sub_fragment_category, container, false);
 
-        category = (Category) getArguments().getSerializable("Category");
+        try {
+            category = (Category) getArguments().getSerializable("Category");
+        }catch (NullPointerException nullPointerException){
+            Toast toast =Toast.makeText(getContext(),"NullPointerException",Toast.LENGTH_SHORT);
+            toast.setMargin(50,50);
+            toast.show();
+        }
 
         image = root.findViewById(R.id.mainCategoryImage);
         try{
@@ -78,14 +85,16 @@ public class SubCategoryFragment extends Fragment implements ProductsRecyclerAda
         rvProducts.setLayoutManager(categoryGridManager);
 
         viewModel.getCategoryList(100, 1, category.id, AppConstants.CHILD_EXCLUDES_ID).observe(getViewLifecycleOwner(), categoriesResponse -> {
-            List<Category> mItems = categoriesResponse;
-            categoryList.addAll(mItems);
+            categoryList.clear();
+            //List<Category> mItems = categoriesResponse;
+            categoryList.addAll(categoriesResponse);
             categoryListViewAdapter.notifyDataSetChanged();
          });
 
         viewModel.getProductList(100, 1, category.id).observe(getViewLifecycleOwner(), productsResponse -> {
-            List<Product> mItems = productsResponse;
-            productList.addAll(mItems);
+            productList.clear();
+            //List<Product> mItems = productsResponse;
+            productList.addAll(productsResponse);
             productsRecyclerAdapter.notifyDataSetChanged();
         });
 
