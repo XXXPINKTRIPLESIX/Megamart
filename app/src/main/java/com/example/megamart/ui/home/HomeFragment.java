@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,11 +20,12 @@ import com.example.megamart.adapters.CategoryHomeRecyclerAdapter;
 import com.example.megamart.adapters.ProductsRecyclerAdapter;
 import com.example.megamart.business.models.Category;
 import com.example.megamart.business.models.Product;
+import com.example.megamart.repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment /*implements ProductsAdapter.OnItemClickListener*/ {
+public class HomeFragment extends Fragment implements CategoryHomeRecyclerAdapter.OnHomeCategoryListener, ProductsRecyclerAdapter.OnProductListener {
     private List<Product> productsList = new ArrayList<>();
     private List<Category> categoryList = new ArrayList<>();
     private RecyclerView rvHomeProducts;
@@ -52,8 +54,8 @@ public class HomeFragment extends Fragment /*implements ProductsAdapter.OnItemCl
         GridLayoutManager categoryGridManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
         rvHomeCategories.setLayoutManager(categoryGridManager);
 
-        categoryAdapter = new CategoryHomeRecyclerAdapter(getContext(), R.layout.category_home_list_item, categoryList);
-        productAdapter = new ProductsRecyclerAdapter(getContext(), R.layout.product_list_item, productsList);
+        categoryAdapter = new CategoryHomeRecyclerAdapter(getContext(), R.layout.category_home_list_item, categoryList, this);
+        productAdapter = new ProductsRecyclerAdapter(getContext(), R.layout.product_list_item, productsList, this);
 
         rvHomeProducts.setAdapter(productAdapter);
         rvHomeCategories.setAdapter(categoryAdapter);
@@ -75,12 +77,19 @@ public class HomeFragment extends Fragment /*implements ProductsAdapter.OnItemCl
         return root;
     }
 
-//    @Override
-//    public void onItemClick(Product task, int pos) {
-//        FragmentManager fm = getFragmentManager();
-//        FragmentTransaction ft = fm.beginTransaction();
-//        FragmentGreen llf = new FragmentGreen();
-//        ft.replace(R.id.listFragment, llf);
-//        ft.commit();
-//    }
+    @Override
+    public void onCategoryClick(int pos) {
+        Category category = categoryList.get(pos);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Category", category);
+        NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_nav_category, bundle);
+    }
+
+    @Override
+    public void onProductClick(int pos) {
+        Product product = productsList.get(pos);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Product", product);
+        NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_productDetailFragment , bundle);
+    }
 }

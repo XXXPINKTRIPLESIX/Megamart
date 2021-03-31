@@ -19,7 +19,8 @@ import retrofit2.Response;
 
 public class ProductRepository {
     private static WoocommerceApi myInterface;
-    private final MutableLiveData<List<Product>> data = new MutableLiveData<>();
+    private final MutableLiveData<List<Product>> productsHome = new MutableLiveData<>();
+    private final MutableLiveData<List<Product>> productsCategories = new MutableLiveData<>();
 
     private static ProductRepository productRepository;
 
@@ -34,23 +35,43 @@ public class ProductRepository {
         myInterface = RetrofitSglt.getInstance().getJSONApi();
     }
 
-    public MutableLiveData<List<Product>> getProductList(int per_page, int page) {
+    public MutableLiveData<List<Product>> getProductHomeList(int per_page, int page) {
         Call<List<Product>> outputData = myInterface.listProducts(RetrofitSglt.getAuthToken(), per_page, page);
         outputData.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.body() != null) {
-                    data.setValue(response.body());
+                    productsHome.setValue(response.body());
                 } else {
-                    data.postValue(null);
+                    productsHome.postValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                data.postValue(null);
+                productsHome.postValue(null);
             }
         });
-        return data;
+        return productsHome;
+    }
+
+    public MutableLiveData<List<Product>> getProductCategoriesList(int per_page, int page, int id) {
+        Call<List<Product>> outputData = myInterface.listCategoryProducts(RetrofitSglt.getAuthToken(), per_page, page, id);
+        outputData.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.body() != null) {
+                    productsCategories.setValue(response.body());
+                } else {
+                    productsCategories.postValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                productsCategories.postValue(null);
+            }
+        });
+        return productsCategories;
     }
 }

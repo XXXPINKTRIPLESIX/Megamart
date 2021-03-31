@@ -32,7 +32,7 @@ public class HomeViewModel extends ViewModel {
         return productList;
     }
     private MutableLiveData<List<Product>> loadProductList(int per_page, int page) {
-        return productRepository.getProductList(per_page, page);
+        return productRepository.getProductHomeList(per_page, page);
     }
 
     public MutableLiveData<List<Category>> getCatalogList(int per_page, int page, int id, String excludes_id) {

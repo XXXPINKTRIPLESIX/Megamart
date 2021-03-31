@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.example.megamart.ui.catalog.CatalogFragment;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+//        CatalogFragmentDirections
+//        navController.navigate();
+//        SpecifyAmountFragmentDirections
 
 //        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
 //            @Override

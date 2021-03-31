@@ -61,13 +61,14 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         final LinearLayout root;
         final TextView categoryName;
         final ImageView categoryImage;
-        OnCategoryListener onCategoryListener;
+        final OnCategoryListener onCategoryListener;
 
         public ViewHolder(@NonNull View view, OnCategoryListener onCategoryListener) {
             super(view);
             root = view.findViewById(R.id.categoryRoot);
             categoryName = view.findViewById(R.id.tvCategoryName);
             categoryImage = view.findViewById(R.id.categoryImage);
+
             this.onCategoryListener = onCategoryListener;
 
             view.setOnClickListener(this);
@@ -79,6 +80,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             onCategoryListener.onCategoryClick(getAdapterPosition());
         }
     }
+
     public interface OnCategoryListener {
         void onCategoryClick(int pos);
     }

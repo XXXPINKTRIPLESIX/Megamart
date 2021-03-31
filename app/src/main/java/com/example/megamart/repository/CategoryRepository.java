@@ -8,6 +8,7 @@ import com.example.megamart.business.retrofit2.RetrofitSglt;
 import com.example.megamart.business.retrofit2.services.WoocommerceApi;
 
 import java.util.List;
+import java.util.Observable;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,7 +16,8 @@ import retrofit2.Response;
 
 public class CategoryRepository {
     private static WoocommerceApi myInterface;
-    private final MutableLiveData<List<Category>> data = new MutableLiveData<>();
+    private final MutableLiveData<List<Category>> category = new MutableLiveData<>();
+    private final MutableLiveData<List<Category>> subCategory = new MutableLiveData<>();
 
     private static CategoryRepository categoryRepository;
 
@@ -36,17 +38,37 @@ public class CategoryRepository {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (response.body() != null) {
-                    data.setValue(response.body());
+                    category.setValue(response.body());
                 } else {
-                    data.postValue(null);
+                    category.postValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-                data.postValue(null);
+                category.postValue(null);
             }
         });
-        return data;
+        return category;
+    }
+
+    public MutableLiveData<List<Category>> getSubCategory(int per_page, int page, int id, String excludes_id) {
+        Call<List<Category>> outputData = myInterface.listParentCategories(RetrofitSglt.getAuthToken(), per_page, page, id, excludes_id);
+        outputData.enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                if (response.body() != null) {
+                    subCategory.setValue(response.body());
+                } else {
+                    subCategory.postValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                subCategory.postValue(null);
+            }
+        });
+        return subCategory;
     }
 }

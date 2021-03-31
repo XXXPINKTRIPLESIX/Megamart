@@ -1,5 +1,6 @@
 package com.example.megamart.business.retrofit2.services;
 
+import com.example.megamart.business.models.Brand;
 import com.example.megamart.business.models.Category;
 import com.example.megamart.business.models.Product;
 
@@ -12,7 +13,24 @@ import retrofit2.http.Query;
 
 public interface WoocommerceApi {
     @GET("/wp-json/wc/v3/products")
-    Call<List<Product>> listProducts(@Header("Authorization") String auth, @Query("per_page") int per_page, @Query("page") int page);
+    Call<List<Product>> listProducts(
+            @Header("Authorization") String auth,
+            @Query("per_page") int per_page,
+            @Query("page") int page);
+
+    @GET("/wp-json/wc/v3/products")
+    Call<List<Product>> listCategoryProducts(
+            @Header("Authorization") String auth,
+            @Query("per_page") int per_page,
+            @Query("page") int page,
+            @Query("category") int category);
+
+    @GET("/wp-json/wc/v3/products")
+    Call<List<Brand>> listBrand(
+            @Header("Authorization") String auth,
+            @Query("per_page") int per_page,
+            @Query("page") int page);
+
     @GET("/wp-json/wc/v3/products/categories")
     Call<List<Category>> listParentCategories(
             @Header("Authorization") String auth,

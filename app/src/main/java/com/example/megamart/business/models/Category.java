@@ -3,10 +3,13 @@ package com.example.megamart.business.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.Observable;
+
 import lombok.Data;
 
 @Data
-public class Category {
+public class Category implements Serializable {
     @SerializedName("id")
     @Expose
     public Integer id;

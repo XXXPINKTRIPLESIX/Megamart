@@ -25,17 +25,20 @@ public class CategoryHomeRecyclerAdapter extends RecyclerView.Adapter<CategoryHo
     private LayoutInflater inflater;
     private int layout;
 
-    public CategoryHomeRecyclerAdapter(@NonNull Context context, int resource, @NonNull List<Category> categories) {
+    private CategoryHomeRecyclerAdapter.OnHomeCategoryListener mOnHomeCategoryListener;
+
+    public CategoryHomeRecyclerAdapter(@NonNull Context context, int resource, @NonNull List<Category> categories, OnHomeCategoryListener onHomeCategoryListener) {
         this.categories = categories;
         this.layout = resource;
         this.inflater = LayoutInflater.from(context);
+        this.mOnHomeCategoryListener = onHomeCategoryListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(this.layout, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnHomeCategoryListener);
     }
 
     @Override
@@ -55,16 +58,28 @@ public class CategoryHomeRecyclerAdapter extends RecyclerView.Adapter<CategoryHo
         return categories.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final LinearLayout categoryHomeRoot;
         final TextView categoryName;
         final ImageView categoryImage;
+        final OnHomeCategoryListener onHomeCategoryListener;
 
-        public ViewHolder(@NonNull View view) {
+
+        public ViewHolder(@NonNull View view, OnHomeCategoryListener onHomeCategoryListener) {
             super(view);
             categoryHomeRoot = view.findViewById(R.id.categoryHomeRoot);
             categoryName = view.findViewById(R.id.tvCategoryHomeName);
             categoryImage = view.findViewById(R.id.categoryHomeImageView);
+            this.onHomeCategoryListener = onHomeCategoryListener;
+
+            view.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) { onHomeCategoryListener.onCategoryClick(getAdapterPosition()); }
+    }
+
+    public interface OnHomeCategoryListener {
+        void onCategoryClick(int pos);
     }
 }

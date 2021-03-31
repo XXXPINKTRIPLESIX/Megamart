@@ -20,30 +20,23 @@ import java.util.List;
 
 public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecyclerAdapter.ViewHolder> {
 
-    public interface OnItemClickListener {
-        void onItemClick(Product task, int pos);
-    }
-
     private List<Product> products;
     private LayoutInflater inflater;
     private int layout;
-    private OnItemClickListener itemClickListener;
+    private OnProductListener mOnProductListener;
 
-    public ProductsRecyclerAdapter(@NonNull Context context, int resource, @NonNull List<Product> products) {
+    public ProductsRecyclerAdapter(@NonNull Context context, int resource, @NonNull List<Product> products, OnProductListener onProductListener) {
         this.products = products;
         this.layout = resource;
         this.inflater = LayoutInflater.from(context);
-
-        if (context instanceof OnItemClickListener) {
-            itemClickListener = (OnItemClickListener) context;
-        }
+        this.mOnProductListener = onProductListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(this.layout, parent, false);
-        return new ViewHolder(view);
+        return new ProductsRecyclerAdapter.ViewHolder(view, mOnProductListener);
     }
 
     @Override
@@ -57,12 +50,6 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
         catch (Exception e){
             holder.productImage.setImageResource(com.example.megamart.R.drawable.no_image_available);
         }
-//        holder.clRoot.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                itemClickListener.onItemClick(product, position);
-//            }
-//        });
     }
 
     @Override
@@ -70,20 +57,33 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
         return products.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final LinearLayout clRoot;
         final TextView productName;
         final TextView productPrice;
         final FloatingActionButton productAddCart;
         final ImageView productImage;
+        final OnProductListener onProductListener;
 
-        public ViewHolder(@NonNull View view) {
+        public ViewHolder(@NonNull View view, OnProductListener onProductListener) {
             super(view);
             clRoot = view.findViewById(R.id.clRoot);
             productName = view.findViewById(R.id.productName);
             productPrice = view.findViewById(R.id.productPrice);
             productAddCart = view.findViewById(R.id.productAddCart);
             productImage = view.findViewById(R.id.productImage);
+
+            this.onProductListener = onProductListener;
+
+            view.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) { onProductListener.onProductClick(getAdapterPosition()); }
     }
+
+    public interface OnProductListener {
+        void onProductClick(int pos);
+    }
+
 }
