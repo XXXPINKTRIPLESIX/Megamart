@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.cart.CartFragment">
 
-    <TextView
-        android:id="@+id/text_cart"
+    <ListView
+        android:id="@+id/lvOrders"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="650dp" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Оформить заказ"
+        android:background="@color/colorSecondaryOrange"/>
+
+    <TextView
+        android:id="@+id/orderSum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

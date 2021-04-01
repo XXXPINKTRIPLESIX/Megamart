@@ -31,7 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubCategoryFragment extends Fragment implements ProductsRecyclerAdapter.OnProductListener {
+public class SubCategoryFragment extends Fragment implements ProductsRecyclerAdapter.OnProductListener, ProductsRecyclerAdapter.OnCartClickListener {
     private ArrayList<Category> categoryList = new ArrayList<>();
     private List<Product> productList = new ArrayList<>();
 
@@ -57,7 +57,7 @@ public class SubCategoryFragment extends Fragment implements ProductsRecyclerAda
         try {
             category = (Category) getArguments().getSerializable("Category");
         }catch (NullPointerException nullPointerException){
-            Toast toast =Toast.makeText(getContext(),"NullPointerException",Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getContext(),"NullPointerException",Toast.LENGTH_SHORT);
             toast.setMargin(50,50);
             toast.show();
         }
@@ -78,7 +78,7 @@ public class SubCategoryFragment extends Fragment implements ProductsRecyclerAda
         categoryListViewAdapter = new CategoryListViewAdapter(getContext(), categoryList);
         lvCategories.setAdapter(categoryListViewAdapter);
 
-        productsRecyclerAdapter = new ProductsRecyclerAdapter(getContext(), R.layout.product_list_item, productList, this);
+        productsRecyclerAdapter = new ProductsRecyclerAdapter(getContext(), R.layout.product_list_item, productList, this, this);
         rvProducts.setAdapter(productsRecyclerAdapter);
 
         GridLayoutManager categoryGridManager = new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false);
@@ -107,6 +107,14 @@ public class SubCategoryFragment extends Fragment implements ProductsRecyclerAda
         Bundle bundle = new Bundle();
         bundle.putSerializable("Product", product);
         NavHostFragment.findNavController(this).navigate(R.id.action_nav_category_to_productDetailFragment , bundle);
+    }
+
+    @Override
+    public void onCartClick(int pos) {
+        Product product = productList.get(pos);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Product", product);
+        NavHostFragment.findNavController(this).navigate(R.id.action_nav_category_to_nav_cart, bundle);
     }
 }
 

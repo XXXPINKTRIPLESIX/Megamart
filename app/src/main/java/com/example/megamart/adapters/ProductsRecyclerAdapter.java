@@ -24,19 +24,21 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
     private LayoutInflater inflater;
     private int layout;
     private OnProductListener mOnProductListener;
+    private OnCartClickListener mOmCartClick;
 
-    public ProductsRecyclerAdapter(@NonNull Context context, int resource, @NonNull List<Product> products, OnProductListener onProductListener) {
+    public ProductsRecyclerAdapter(@NonNull Context context, int resource, @NonNull List<Product> products, OnProductListener onProductListener, OnCartClickListener onCartClick ) {
         this.products = products;
         this.layout = resource;
         this.inflater = LayoutInflater.from(context);
         this.mOnProductListener = onProductListener;
+        this.mOmCartClick = onCartClick;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(this.layout, parent, false);
-        return new ProductsRecyclerAdapter.ViewHolder(view, mOnProductListener);
+        return new ProductsRecyclerAdapter.ViewHolder(view, mOnProductListener, mOmCartClick);
     }
 
     @Override
@@ -64,8 +66,9 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
         final FloatingActionButton productAddCart;
         final ImageView productImage;
         final OnProductListener onProductListener;
+        final OnCartClickListener onCartClick;
 
-        public ViewHolder(@NonNull View view, OnProductListener onProductListener) {
+        public ViewHolder(@NonNull View view, OnProductListener onProductListener, OnCartClickListener onCartClick) {
             super(view);
             clRoot = view.findViewById(R.id.clRoot);
             productName = view.findViewById(R.id.productName);
@@ -74,12 +77,22 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
             productImage = view.findViewById(R.id.productImage);
 
             this.onProductListener = onProductListener;
+            this.onCartClick = onCartClick;
 
+            productAddCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onCartClick.onCartClick(getAdapterPosition());
+                }
+            });
             view.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) { onProductListener.onProductClick(getAdapterPosition()); }
+    }
+    public interface OnCartClickListener {
+        void onCartClick(int pos);
     }
 
     public interface OnProductListener {

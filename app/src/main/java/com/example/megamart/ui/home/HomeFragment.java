@@ -25,7 +25,7 @@ import com.example.megamart.repository.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements CategoryHomeRecyclerAdapter.OnHomeCategoryListener, ProductsRecyclerAdapter.OnProductListener {
+public class HomeFragment extends Fragment implements CategoryHomeRecyclerAdapter.OnHomeCategoryListener, ProductsRecyclerAdapter.OnProductListener, ProductsRecyclerAdapter.OnCartClickListener {
     private List<Product> productsList = new ArrayList<>();
     private List<Category> categoryList = new ArrayList<>();
     private RecyclerView rvHomeProducts;
@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment implements CategoryHomeRecyclerAdapte
         rvHomeCategories.setLayoutManager(categoryGridManager);
 
         categoryAdapter = new CategoryHomeRecyclerAdapter(getContext(), R.layout.category_home_list_item, categoryList, this);
-        productAdapter = new ProductsRecyclerAdapter(getContext(), R.layout.product_list_item, productsList, this);
+        productAdapter = new ProductsRecyclerAdapter(getContext(), R.layout.product_list_item, productsList, this, this);
 
         rvHomeProducts.setAdapter(productAdapter);
         rvHomeCategories.setAdapter(categoryAdapter);
@@ -91,5 +91,13 @@ public class HomeFragment extends Fragment implements CategoryHomeRecyclerAdapte
         Bundle bundle = new Bundle();
         bundle.putSerializable("Product", product);
         NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_productDetailFragment, bundle);
+    }
+
+    @Override
+    public void onCartClick(int pos) {
+        Product product = productsList.get(pos);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Product", product);
+        NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_nav_cart2, bundle);
     }
 }
