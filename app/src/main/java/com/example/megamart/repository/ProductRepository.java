@@ -41,7 +41,7 @@ public class ProductRepository {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.body() != null) {
-                    productsHome.setValue(response.body());
+                    productsHome.postValue(response.body());
                 } else {
                     productsHome.postValue(null);
                 }
@@ -61,7 +61,7 @@ public class ProductRepository {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.body() != null) {
-                    productsCategories.setValue(response.body());
+                    productsCategories.postValue(response.body());
                 } else {
                     productsCategories.postValue(null);
                 }

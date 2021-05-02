@@ -50,7 +50,6 @@ public class CartListViewAdapter extends ArrayAdapter<Product> {
             image.setImageResource(com.example.megamart.R.drawable.no_image_available);
         }
 
-
         name.setText(currentProduct.getName());
         price.setText(currentProduct.getPrice());
 

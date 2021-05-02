@@ -36,7 +36,7 @@ import retrofit2.Response;
 //            @Override
 //            public void onResponse(Call<List<Brand>> call, Response<List<Brand>> response) {
 //                if (response.body() != null) {
-//                    data.setValue(response.body());
+//                    data.postValue(response.body());
 //                } else {
 //                    data.postValue(null);
 //                }

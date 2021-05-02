@@ -31,6 +31,7 @@ public class HomeViewModel extends ViewModel {
         productList = loadProductList(per_page, page);
         return productList;
     }
+
     private MutableLiveData<List<Product>> loadProductList(int per_page, int page) {
         return productRepository.getProductHomeList(per_page, page);
     }

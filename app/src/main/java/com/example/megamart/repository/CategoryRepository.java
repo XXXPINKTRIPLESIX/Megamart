@@ -38,7 +38,7 @@ public class CategoryRepository {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (response.body() != null) {
-                    category.setValue(response.body());
+                    category.postValue(response.body());
                 } else {
                     category.postValue(null);
                 }
@@ -58,7 +58,7 @@ public class CategoryRepository {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (response.body() != null) {
-                    subCategory.setValue(response.body());
+                    subCategory.postValue(response.body());
                 } else {
                     subCategory.postValue(null);
                 }

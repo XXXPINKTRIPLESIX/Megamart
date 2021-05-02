@@ -25,12 +25,6 @@ public interface WoocommerceApi {
             @Query("page") int page,
             @Query("category") int category);
 
-    @GET("/wp-json/wc/v3/products")
-    Call<List<Brand>> listBrand(
-            @Header("Authorization") String auth,
-            @Query("per_page") int per_page,
-            @Query("page") int page);
-
     @GET("/wp-json/wc/v3/products/categories")
     Call<List<Category>> listParentCategories(
             @Header("Authorization") String auth,
@@ -38,4 +32,10 @@ public interface WoocommerceApi {
             @Query("page") int page,
             @Query("parent") int parent_id,
             @Query("exclude") String excludes_id);
+
+//    @GET("/wp-json/wc/v3/products")
+//    Call<List<Brand>> listBrand(
+//            @Header("Authorization") String auth,
+//            @Query("per_page") int per_page,
+//            @Query("page") int page);
 }

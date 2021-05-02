@@ -28,8 +28,11 @@ import static androidx.navigation.Navigation.findNavController;
 
 public class CatalogFragment extends Fragment implements CategoryRecyclerAdapter.OnCategoryListener {
     private List<Category> categoryList = new ArrayList<>();
+
     private CatalogViewModel viewModel;
+
     private RecyclerView rvCatalog;
+
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,8 +56,8 @@ public class CatalogFragment extends Fragment implements CategoryRecyclerAdapter
 
         viewModel.getCatalogList(100, 1, 0, AppConstants.EXCLUDES_ID).observe(getViewLifecycleOwner(), categoriesResponse -> {
             categoryList.clear();
-            //List<Category> mItems = categoriesResponse;
             categoryList.addAll(categoriesResponse);
+            categoryRecyclerAdapter.notifyDataSetChanged();
         });
 
         return root;
@@ -66,11 +69,5 @@ public class CatalogFragment extends Fragment implements CategoryRecyclerAdapter
         Bundle bundle = new Bundle();
         bundle.putSerializable("Category", category);
         NavHostFragment.findNavController(this).navigate(R.id.action_nav_catalog_to_nav_category, bundle);
-
-//        if(category.slug.equals("transport")) {
-//            NavHostFragment.findNavController(this).navigate(R.id.action_nav_catalog_to_productFragment , bundle);
-//        } else {
-//
-//        }
     }
 }

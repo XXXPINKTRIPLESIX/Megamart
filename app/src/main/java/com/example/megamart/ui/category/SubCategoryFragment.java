@@ -39,14 +39,13 @@ public class SubCategoryFragment extends Fragment implements ProductsRecyclerAda
 
     private ListView lvCategories;
     private RecyclerView rvProducts;
+    private ImageView image;
+    private TextView categoryName;
 
     private CategoryListViewAdapter categoryListViewAdapter;
     private ProductsRecyclerAdapter productsRecyclerAdapter;
 
     Category category;
-
-    private ImageView image;
-    private TextView categoryName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -86,14 +85,12 @@ public class SubCategoryFragment extends Fragment implements ProductsRecyclerAda
 
         viewModel.getCategoryList(100, 1, category.id, AppConstants.CHILD_EXCLUDES_ID).observe(getViewLifecycleOwner(), categoriesResponse -> {
             categoryList.clear();
-            //List<Category> mItems = categoriesResponse;
             categoryList.addAll(categoriesResponse);
             categoryListViewAdapter.notifyDataSetChanged();
          });
 
         viewModel.getProductList(100, 1, category.id).observe(getViewLifecycleOwner(), productsResponse -> {
             productList.clear();
-            //List<Product> mItems = productsResponse;
             productList.addAll(productsResponse);
             productsRecyclerAdapter.notifyDataSetChanged();
         });
